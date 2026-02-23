@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 
-const DropSchema = new mongoose.Schema({
-  date: Date
-});
-
-export default mongoose.model("Drop", DropSchema);
+export default mongoose.model(
+  "Drop",
+  new mongoose.Schema({
+    date: Date
+  })
+);
