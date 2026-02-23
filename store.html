@@ -1,15 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>STORE</title>
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
+<body class="dark">
 
-<body class="store">
-  <h1>STORE</h1>
-  <div id="products" class="product-grid"></div>
+<h1>STORE</h1>
 
-  <script src="./store.js"></script>
+<select id="currency" onchange="renderStore()">
+  <option value="USD">$</option>
+  <option value="EUR">€</option>
+  <option value="INR">₹</option>
+  <option value="JPY">¥</option>
+  <option value="GBP">£</option>
+  <option value="DNR">د</option>
+</select>
+
+<div id="store"></div>
+
+<script src="store.js"></script>
 </body>
 </html>
