@@ -1,50 +1,48 @@
-function setDrop() {
-  localStorage.setItem("dropDate", document.getElementById("drop").value);
-  alert("Drop saved");
+let products = JSON.parse(localStorage.getItem("products")) || [];
+const list = document.getElementById("list");
+
+function save() {
+  localStorage.setItem("products", JSON.stringify(products));
+  render();
 }
 
-function addItem() {
-  const items = JSON.parse(localStorage.getItem("items") || "[]");
-
-  items.push({
+function addProduct() {
+  products.push({
     name: name.value,
-    price: Number(price.value),
+    price: price.value,
     image: image.value,
-    visible: true
+    active: true
   });
-
-  localStorage.setItem("items", JSON.stringify(items));
-  renderItems();
+  save();
 }
 
 function toggle(i) {
-  const items = JSON.parse(localStorage.getItem("items"));
-  items[i].visible = !items[i].visible;
-  localStorage.setItem("items", JSON.stringify(items));
-  renderItems();
+  products[i].active = !products[i].active;
+  save();
 }
 
-function removeItem(i) {
-  const items = JSON.parse(localStorage.getItem("items"));
-  items.splice(i, 1);
-  localStorage.setItem("items", JSON.stringify(items));
-  renderItems();
+function del(i) {
+  products.splice(i, 1);
+  save();
 }
 
-function renderItems() {
-  const el = document.getElementById("items");
-  const items = JSON.parse(localStorage.getItem("items") || "[]");
-  el.innerHTML = "";
+function setDrop() {
+  localStorage.setItem("dropDate", drop.value);
+  alert("Drop date set");
+}
 
-  items.forEach((item, i) => {
-    el.innerHTML += `
-      <div>
-        ${item.name} - ${item.visible ? "ON" : "OFF"}
-        <button onclick="toggle(${i})">TOGGLE</button>
-        <button onclick="removeItem(${i})">✖</button>
+function render() {
+  list.innerHTML = "";
+  products.forEach((p, i) => {
+    list.innerHTML += `
+      <div class="admin-item">
+        <img src="${p.image}">
+        <span>${p.name}</span>
+        <button onclick="toggle(${i})">${p.active ? "ON" : "OFF"}</button>
+        <button onclick="del(${i})">✕</button>
       </div>
     `;
   });
 }
 
-renderItems();
+render();
