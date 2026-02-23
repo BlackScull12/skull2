@@ -1,31 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ADMIN</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./style.css">
 </head>
-<body class="admin">
+<body>
+  <h1>ADMIN</h1>
 
-<h1>ADMIN DASHBOARD</h1>
+  <input id="pass" placeholder="Password">
+  <button onclick="login()">LOGIN</button>
 
-<div class="admin-form">
-  <input id="name" placeholder="Product name">
-  <input id="price" placeholder="Price">
-  <input id="image" placeholder="Image URL">
-  <button onclick="addProduct()">ADD PRODUCT</button>
-</div>
+  <div id="panel" hidden>
+    <input id="name" placeholder="Name">
+    <input id="price" placeholder="Price">
+    <input id="img" placeholder="Image URL">
+    <button onclick="add()">ADD PRODUCT</button>
 
-<hr>
+    <input type="datetime-local" id="drop">
+    <button onclick="setDrop()">SET DROP</button>
 
-<input type="datetime-local" id="drop">
-<button onclick="setDrop()">SET DROP DATE</button>
+    <div id="list"></div>
+  </div>
 
-<h2>PRODUCTS</h2>
-<div id="list"></div>
-
-<script src="admin.js"></script>
+  <script src="./admin.js"></script>
 </body>
 </html>
-
-currencySelect.onchange = render;
-render();
