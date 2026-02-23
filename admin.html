@@ -3,38 +3,29 @@
 <head>
   <title>ADMIN</title>
   <link rel="stylesheet" href="style.css">
-  <script>
-    if (localStorage.getItem("admin") !== "true") {
-      const p = prompt("Admin password:");
-      if (p !== "void123") {
-        window.location.href = "index.html";
-      } else {
-        localStorage.setItem("admin", "true");
-      }
-    }
-  </script>
 </head>
-<body class="dark">
+<body class="admin">
 
 <h1>ADMIN DASHBOARD</h1>
 
-<h3>SET DROP DATE</h3>
+<div class="admin-form">
+  <input id="name" placeholder="Product name">
+  <input id="price" placeholder="Price">
+  <input id="image" placeholder="Image URL">
+  <button onclick="addProduct()">ADD PRODUCT</button>
+</div>
+
+<hr>
+
 <input type="datetime-local" id="drop">
-<button onclick="setDrop()">SAVE</button>
+<button onclick="setDrop()">SET DROP DATE</button>
 
-<hr>
-
-<h3>ADD ITEM</h3>
-<input id="name" placeholder="Name">
-<input id="price" type="number" placeholder="Price USD">
-<input id="image" placeholder="Image URL">
-<button onclick="addItem()">ADD</button>
-
-<hr>
-
-<h3>ITEMS</h3>
-<div id="items"></div>
+<h2>PRODUCTS</h2>
+<div id="list"></div>
 
 <script src="admin.js"></script>
 </body>
 </html>
+
+currencySelect.onchange = render;
+render();
