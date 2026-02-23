@@ -1,4 +1,4 @@
-const API_URL = "https://YOUR_BACKEND_URL";
+const API_URL = "http://localhost:5000";
 let token = "";
 
 function login() {
