@@ -6,12 +6,11 @@ import Admin from "../models/Admin.js";
 const router = express.Router();
 
 router.post("/login", async (req, res) => {
-  const { password } = req.body;
   const admin = await Admin.findOne();
-  if (!admin) return res.status(400).json({ msg: "No admin" });
+  if (!admin) return res.sendStatus(400);
 
-  const match = await bcrypt.compare(password, admin.password);
-  if (!match) return res.status(401).json({ msg: "Wrong password" });
+  const ok = await bcrypt.compare(req.body.password, admin.password);
+  if (!ok) return res.sendStatus(401);
 
   const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET);
   res.json({ token });
