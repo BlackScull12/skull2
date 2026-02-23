@@ -1,25 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>ADMIN</title>
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    if (localStorage.getItem("admin") !== "true") {
+      const p = prompt("Admin password:");
+      if (p !== "void123") {
+        window.location.href = "index.html";
+      } else {
+        localStorage.setItem("admin", "true");
+      }
+    }
+  </script>
 </head>
-
-<body class="admin">
+<body class="dark">
 
 <h1>ADMIN DASHBOARD</h1>
 
-<input id="name" placeholder="Product name">
-<input id="price" placeholder="Price">
-<input id="image" placeholder="Image URL">
-<button onclick="addProduct()">ADD PRODUCT</button>
+<h3>SET DROP DATE</h3>
+<input type="datetime-local" id="drop">
+<button onclick="setDrop()">SAVE</button>
 
 <hr>
 
-<input type="datetime-local" id="drop">
-<button onclick="setDrop()">SET DROP DATE</button>
+<h3>ADD ITEM</h3>
+<input id="name" placeholder="Name">
+<input id="price" type="number" placeholder="Price USD">
+<input id="image" placeholder="Image URL">
+<button onclick="addItem()">ADD</button>
 
-<script src="./admin.js"></script>
+<hr>
+
+<h3>ITEMS</h3>
+<div id="items"></div>
+
+<script src="admin.js"></script>
 </body>
 </html>
