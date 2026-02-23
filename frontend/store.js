@@ -1,4 +1,4 @@
-const API_URL = "https://YOUR_BACKEND_URL";
+const API_URL = "http://localhost:5000";
 const grid = document.getElementById("grid");
 
 fetch(`${API_URL}/api/products`)
