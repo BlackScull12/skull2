@@ -18,24 +18,16 @@ body {
   padding: 12px 30px;
   color: white;
   text-decoration: none;
-  margin-top: 20px;
 }
 
 .disabled {
-  pointer-events: none;
   opacity: 0.4;
-}
-
-#adminBubble {
-  position: fixed;
-  top: 15px;
-  right: 15px;
-  cursor: pointer;
+  pointer-events: none;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 20px;
 }
 
