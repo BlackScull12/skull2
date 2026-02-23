@@ -1,41 +1,27 @@
-const countdownEl = document.getElementById("countdown");
-const enterBtn = document.getElementById("enterBtn");
-const adminBubble = document.getElementById("adminBubble");
+const API_URL = "https://YOUR_BACKEND_URL";
 
-function checkDrop() {
-  const dropDate = localStorage.getItem("dropDate");
-  if (!dropDate) {
-    countdownEl.innerText = "DROP DATE NOT SET";
+const cd = document.getElementById("countdown");
+const enter = document.getElementById("enter");
+
+async function tick() {
+  const drop = await fetch(`${API_URL}/api/drop`).then(r => r.json());
+
+  if (!drop) {
+    cd.innerText = "DROP NOT SET";
     return;
   }
 
-  const now = new Date().getTime();
-  const dropTime = new Date(dropDate).getTime();
-  const diff = dropTime - now;
+  const diff = new Date(drop.date) - new Date();
 
   if (diff <= 0) {
-    countdownEl.innerText = "DROP LIVE";
-    enterBtn.classList.remove("disabled");
-    enterBtn.href = "store.html";
+    cd.innerText = "DROP LIVE";
+    enter.classList.remove("disabled");
+    enter.href = "./store.html";
     return;
   }
 
-  const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const m = Math.floor((diff / (1000 * 60)) % 60);
-  const s = Math.floor((diff / 1000) % 60);
-
-  countdownEl.innerText = `${d}d ${h}h ${m}m ${s}s`;
+  cd.innerText = Math.floor(diff / 1000) + "s";
 }
 
-setInterval(checkDrop, 1000);
-checkDrop();
-
-adminBubble.onclick = () => {
-  const pass = prompt("Admin password:");
-  if (pass === "admin123") {
-    window.location.href = "admin.html";
-  } else {
-    alert("Wrong password");
-  }
-};
+setInterval(tick, 1000);
+tick();
