@@ -1,36 +1,34 @@
-const countdown = document.getElementById("countdown");
-const timeEl = document.getElementById("time");
-const enterBtn = document.getElementById("enterBtn");
-
-const dropDate = localStorage.getItem("dropDate");
-
-function dropLive() {
-  if (!dropDate) return true;
-  return new Date() >= new Date(dropDate);
+function enterStore() {
+  const drop = localStorage.getItem("dropDate");
+  if (!drop || new Date(drop) > new Date()) {
+    alert("Drop not live yet");
+    return;
+  }
+  window.location.href = "store.html";
 }
 
-function startCountdown() {
-  countdown.classList.remove("hidden");
+function updateCountdown() {
+  const el = document.getElementById("countdown");
+  const drop = localStorage.getItem("dropDate");
 
-  setInterval(() => {
-    const diff = new Date(dropDate) - new Date();
+  if (!drop) {
+    el.innerText = "NO DROP SET";
+    return;
+  }
 
-    if (diff <= 0) {
-      countdown.classList.add("hidden");
-      enterBtn.classList.remove("hidden");
-      return;
-    }
+  const diff = new Date(drop) - new Date();
 
-    const h = Math.floor(diff / 1000 / 60 / 60);
-    const m = Math.floor(diff / 1000 / 60) % 60;
-    const s = Math.floor(diff / 1000) % 60;
+  if (diff <= 0) {
+    el.innerText = "DROP LIVE";
+    return;
+  }
 
-    timeEl.textContent = `${h}H ${m}M ${s}S`;
-  }, 1000);
+  const h = Math.floor(diff / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+
+  el.innerText = `DROP IN ${h}h ${m}m ${s}s`;
 }
 
-if (dropLive()) {
-  enterBtn.classList.remove("hidden");
-} else {
-  startCountdown();
-}
+setInterval(updateCountdown, 1000);
+updateCountdown();
