@@ -19,5 +19,5 @@ app.use("/api/products", productRoutes);
 app.use("/api/drop", dropRoutes);
 
 app.listen(process.env.PORT, () =>
-  console.log(`Server running on ${process.env.PORT}`)
+  console.log(`Backend running on ${process.env.PORT}`)
 );
