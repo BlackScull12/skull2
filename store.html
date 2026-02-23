@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>STORE</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="dark">
+<body class="store">
 
 <h1>STORE</h1>
 
-<select id="currency" onchange="renderStore()">
-  <option value="USD">$</option>
-  <option value="EUR">€</option>
-  <option value="INR">₹</option>
-  <option value="JPY">¥</option>
-  <option value="GBP">£</option>
-  <option value="DNR">د</option>
+<select id="currency">
+  <option value="INR">₹ INR</option>
+  <option value="USD">$ USD</option>
+  <option value="EUR">€ EUR</option>
+  <option value="GBP">£ GBP</option>
+  <option value="JPY">¥ JPY</option>
 </select>
 
-<div id="store"></div>
+<div id="products" class="grid"></div>
 
 <script src="store.js"></script>
 </body>
