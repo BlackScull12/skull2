@@ -1,34 +1,41 @@
-function enterStore() {
-  const drop = localStorage.getItem("dropDate");
-  if (!drop || new Date(drop) > new Date()) {
-    alert("Drop not live yet");
-    return;
-  }
-  window.location.href = "store.html";
-}
+const countdownEl = document.getElementById("countdown");
+const enterBtn = document.getElementById("enterBtn");
+const adminBubble = document.getElementById("adminBubble");
 
-function updateCountdown() {
-  const el = document.getElementById("countdown");
-  const drop = localStorage.getItem("dropDate");
-
-  if (!drop) {
-    el.innerText = "NO DROP SET";
+function checkDrop() {
+  const dropDate = localStorage.getItem("dropDate");
+  if (!dropDate) {
+    countdownEl.innerText = "DROP DATE NOT SET";
     return;
   }
 
-  const diff = new Date(drop) - new Date();
+  const now = new Date().getTime();
+  const dropTime = new Date(dropDate).getTime();
+  const diff = dropTime - now;
 
   if (diff <= 0) {
-    el.innerText = "DROP LIVE";
+    countdownEl.innerText = "DROP LIVE";
+    enterBtn.classList.remove("disabled");
+    enterBtn.href = "store.html";
     return;
   }
 
-  const h = Math.floor(diff / 3600000);
-  const m = Math.floor((diff % 3600000) / 60000);
-  const s = Math.floor((diff % 60000) / 1000);
+  const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const m = Math.floor((diff / (1000 * 60)) % 60);
+  const s = Math.floor((diff / 1000) % 60);
 
-  el.innerText = `DROP IN ${h}h ${m}m ${s}s`;
+  countdownEl.innerText = `${d}d ${h}h ${m}m ${s}s`;
 }
 
-setInterval(updateCountdown, 1000);
-updateCountdown();
+setInterval(checkDrop, 1000);
+checkDrop();
+
+adminBubble.onclick = () => {
+  const pass = prompt("Admin password:");
+  if (pass === "admin123") {
+    window.location.href = "admin.html";
+  } else {
+    alert("Wrong password");
+  }
+};
