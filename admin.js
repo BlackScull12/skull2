@@ -1,27 +1,50 @@
-function addProduct() {
-  const nameInput = document.getElementById("name").value.trim();
-  const priceInput = document.getElementById("price").value.trim();
-  const imageInput = document.getElementById("image").value.trim();
+function setDrop() {
+  localStorage.setItem("dropDate", document.getElementById("drop").value);
+  alert("Drop saved");
+}
 
-  if (!nameInput || !priceInput || !imageInput) {
-    alert("Fill all fields");
-    return;
-  }
+function addItem() {
+  const items = JSON.parse(localStorage.getItem("items") || "[]");
 
-  const products = JSON.parse(localStorage.getItem("products") || "[]");
-
-  products.push({
-    name: nameInput,              // ✅ CORRECT KEY
-    price: Number(priceInput),    // ✅ NUMBER
-    image: imageInput,
-    active: true
+  items.push({
+    name: name.value,
+    price: Number(price.value),
+    image: image.value,
+    visible: true
   });
 
-  localStorage.setItem("products", JSON.stringify(products));
-  alert("Product added");
-
-  // Clear inputs
-  document.getElementById("name").value = "";
-  document.getElementById("price").value = "";
-  document.getElementById("image").value = "";
+  localStorage.setItem("items", JSON.stringify(items));
+  renderItems();
 }
+
+function toggle(i) {
+  const items = JSON.parse(localStorage.getItem("items"));
+  items[i].visible = !items[i].visible;
+  localStorage.setItem("items", JSON.stringify(items));
+  renderItems();
+}
+
+function removeItem(i) {
+  const items = JSON.parse(localStorage.getItem("items"));
+  items.splice(i, 1);
+  localStorage.setItem("items", JSON.stringify(items));
+  renderItems();
+}
+
+function renderItems() {
+  const el = document.getElementById("items");
+  const items = JSON.parse(localStorage.getItem("items") || "[]");
+  el.innerHTML = "";
+
+  items.forEach((item, i) => {
+    el.innerHTML += `
+      <div>
+        ${item.name} - ${item.visible ? "ON" : "OFF"}
+        <button onclick="toggle(${i})">TOGGLE</button>
+        <button onclick="removeItem(${i})">✖</button>
+      </div>
+    `;
+  });
+}
+
+renderItems();
