@@ -1,18 +1,27 @@
 function addProduct() {
+  const nameInput = document.getElementById("name").value.trim();
+  const priceInput = document.getElementById("price").value.trim();
+  const imageInput = document.getElementById("image").value.trim();
+
+  if (!nameInput || !priceInput || !imageInput) {
+    alert("Fill all fields");
+    return;
+  }
+
   const products = JSON.parse(localStorage.getItem("products") || "[]");
 
   products.push({
-    name: name.value,
-    price: price.value,
-    image: image.value,
+    name: nameInput,              // ✅ CORRECT KEY
+    price: Number(priceInput),    // ✅ NUMBER
+    image: imageInput,
     active: true
   });
 
   localStorage.setItem("products", JSON.stringify(products));
   alert("Product added");
-}
 
-function setDrop() {
-  localStorage.setItem("dropDate", drop.value);
-  alert("Drop date saved");
+  // Clear inputs
+  document.getElementById("name").value = "";
+  document.getElementById("price").value = "";
+  document.getElementById("image").value = "";
 }
