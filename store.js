@@ -1,33 +1,27 @@
-const rates = {
-  USD: 1,
-  EUR: 0.9,
-  INR: 83,
-  JPY: 150,
-  GBP: 0.78,
-  DNR: 0.31
-};
+const grid = document.getElementById("products");
+const currencySelect = document.getElementById("currency");
 
-function renderStore() {
-  const store = document.getElementById("store");
-  const items = JSON.parse(localStorage.getItem("items") || "[]");
-  const currency = document.getElementById("currency").value;
+let products = JSON.parse(localStorage.getItem("products")) || [];
 
-  store.innerHTML = "";
+function render() {
+  grid.innerHTML = "";
 
-  items.forEach((item, i) => {
-    if (!item.visible) return;
+  products.forEach((p, i) => {
+    if (!p.active) return;
 
-    const price = Math.round(item.price * rates[currency]);
+    const card = document.createElement("div");
+    card.className = "card";
 
-    store.innerHTML += `
-      <div class="card">
-        <img src="${item.image}">
-        <h3>${item.name}</h3>
-        <p>${price} ${currency}</p>
-        <button>BUY</button>
-      </div>
+    card.innerHTML = `
+      <img src="${p.image}">
+      <h3>${p.name}</h3>
+      <p>${p.price} ${currencySelect.value}</p>
+      <button>BUY</button>
     `;
+
+    grid.appendChild(card);
   });
 }
 
-renderStore();
+currencySelect.onchange = render;
+render();
